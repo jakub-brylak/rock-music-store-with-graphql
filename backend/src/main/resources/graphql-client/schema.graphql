@@ -1,0 +1,71 @@
+# Enums
+enum TagCategory {
+  MOOD
+  THEME
+}
+
+# Root Queries
+type Query {
+  genres: [Genre!]!
+  genre(id: ID!): Genre
+
+  bands(genreId: ID): [Band!]!
+  band(id: ID!): Band
+
+  album(id: ID!): Album
+  song(id: ID!): Song
+  tag(id: ID!): Tag
+
+  songsByTag(tagId: ID!): [Song!]!
+}
+
+# Core types
+
+type Genre {
+  id: ID!
+  name: String!
+  description: String
+  bands: [Band!]!
+}
+
+type Band {
+  id: ID!
+  name: String!
+  originCountry: String
+  members: [Member!]!
+  genre: Genre!
+  albums: [Album!]!
+}
+
+type Member {
+  id: ID!
+  name: String!
+  instrument: String!
+  joinDate: String
+  leaveDate: String
+}
+
+type Album {
+  id: ID!
+  title: String!
+  releaseDate: String!
+  band: Band!
+  songs: [Song!]!
+  coverUrl: String
+}
+
+type Song {
+  id: ID!
+  title: String!
+  duration: Int! # duration in seconds
+  album: Album!
+  tags: [Tag!]!
+  lyrics: String
+}
+
+type Tag {
+  id: ID!
+  name: String!
+  category: TagCategory!
+  description: String
+}
